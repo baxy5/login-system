@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Roboto Slab', serif;
+}
+
+.main{
+    padding: 30px;
+}
+
+.main h1{
+    text-align: center;
+    margin-bottom: 200px;
+}
+
+.main form{
+    width: 30em;
+}
+
+.login-form{
+    display: flex;
+    justify-content: center;
+}
