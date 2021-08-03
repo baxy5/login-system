@@ -2,11 +2,11 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// plain data instead mongodb
-const plainData = {
-    username: "admin",
-    password: "admin"
-}
+const MongoClient = require("mongodb").MongoClient;
+const url =
+  "mongodb+srv://bakszy:asdasd@cluster0.ov4ny.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
+const plainData = require("./loginData");
 
 /* In the latest version of express there is no need of that
 const bodyParser = require('body-parser'); */
@@ -25,8 +25,7 @@ app.get("/admin", (req, res) => {
 });
 
 app.post("/admin", (req, res) => {
-  let username = req.body.username;
-  let password = req.body.password;
+  const { username, password } = req.body;
 
   if (username == plainData.username && password == plainData.password) {
     res.sendFile(__dirname + "/client/adminDashboard.html");
@@ -34,7 +33,6 @@ app.post("/admin", (req, res) => {
     res.status(404).send("Nope!");
     // if you want a custome 404 error page you have to make a html
   }
-
 });
 
 app.listen(PORT, () => {
