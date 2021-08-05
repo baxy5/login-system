@@ -28,7 +28,7 @@ app.get("/admin", (req, res) => {
 app.post("/admin", (req, res) => {
   const { username, password } = req.body;
 
-  MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
+  MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
     if (err) throw err;
 
     let dbo = db.db("mydb");
