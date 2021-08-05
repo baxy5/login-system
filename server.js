@@ -9,23 +9,22 @@ const url =
 
 // CORS
 const cors = require("cors");
+app.use(cors());
 
 // Bcrypt
 const bcrypt = require("bcrypt");
 
-/* In the latest version of express there is no need of that
-const bodyParser = require('body-parser'); */
+/*  In the latest version of express there is no need of that
+      const bodyParser = require('body-parser');               */
+/*  In the latest version of express there is no need of that (deprecated)
+      app.use(bodyParser.urlencoded({extended: true}));                     */
 
-// for static files (CSS)
-app.use(express.static(__dirname + "/client"));
-
-/* In the latest version of express there is no need of that (deprecated)
-app.use(bodyParser.urlencoded({extended: true})); */
 // instead:
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(cors());
+// for static files (CSS)
+app.use(express.static(__dirname + "/client"));
 
 app.get("/admin", (req, res) => {
   res.sendFile(__dirname + "/client/adminLogin.html");
