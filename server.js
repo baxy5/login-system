@@ -1,3 +1,4 @@
+const cors = require("cors");
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -5,8 +6,6 @@ const PORT = process.env.PORT || 5000;
 const MongoClient = require("mongodb").MongoClient;
 const url =
   "mongodb+srv://bakszy:asdasd@cluster0.ov4ny.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-
-const plainData = require("./loginData");
 
 /* In the latest version of express there is no need of that
 const bodyParser = require('body-parser'); */
@@ -20,6 +19,8 @@ app.use(bodyParser.urlencoded({extended: true})); */
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(cors());
+
 app.get("/admin", (req, res) => {
   res.sendFile(__dirname + "/client/adminLogin.html");
 });
@@ -27,12 +28,21 @@ app.get("/admin", (req, res) => {
 app.post("/admin", (req, res) => {
   const { username, password } = req.body;
 
-  if (username == plainData.username && password == plainData.password) {
-    res.sendFile(__dirname + "/client/adminDashboard.html");
-  } else {
-    res.status(404).send("Nope!");
-    // if you want a custome 404 error page you have to make a html
-  }
+  MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
+    if (err) throw err;
+
+    let dbo = db.db("mydb");
+    dbo.collection("admin-login-data").findOne({}, (err, result) => {
+      if (username == result.username && password == result.password) {
+        res.sendFile(__dirname + "/client/adminDashboard.html");
+      } else {
+        res.status(404).send("Nope!");
+        // if you want a custome 404 error page you have to make a html
+      }
+
+      db.close();
+    });
+  });
 });
 
 app.listen(PORT, () => {
