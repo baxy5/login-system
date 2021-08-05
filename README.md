@@ -1,1 +1,1 @@
-# Basic Login System using: NodeJS Express + MongoDB + Bcrypt (hashing the password) :lightning:
+# Basic Login System using: NodeJS Express + MongoDB + Bcrypt (hashing the password) :lighting:
