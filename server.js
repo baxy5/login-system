@@ -47,7 +47,7 @@ app.post("/admin", (req, res) => {
           if (username == result.username && resultBoolean) {
             res.sendFile(__dirname + "/client/adminDashboard.html");
           } else {
-            res.status(401).sendFile(__dirname + "/client/404error.html");
+            res.status(401).sendFile(__dirname + "/client/401error.html");
             // if you want a custome 404 error page you have to make a html
           }
         });
